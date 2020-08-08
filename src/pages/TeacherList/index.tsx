@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text } from 'react-native';
-import { ScrollView, TextInput } from 'react-native-gesture-handler';
+import { ScrollView, TextInput, BorderlessButton } from 'react-native-gesture-handler';
+import { Feather } from '@expo/vector-icons';
 
 import PageHeader from '../../components/PageHeader';
 import TeacherItem from '../../components/TeacherItem';
@@ -8,32 +9,46 @@ import TeacherItem from '../../components/TeacherItem';
 import styles from './styles';
 
 function TeacherList() {
+    const [isFiltersVisible, setIsFiltersVisible] = useState(false);
+
+    function handleToogleFiltersVisible() {
+        setIsFiltersVisible(!isFiltersVisible);
+    }
+
     return (
         <View style={styles.container}>
-            <PageHeader title="Proffys disponíveis">
-                <View style={styles.searchForm}>
-                    <Text style={styles.label}>Matéria</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Qual a matéria?"
-                        placeholderTextColor="#C1BCCC" />
-                    <View style={styles.inputGroup}>
-                        <View style={styles.inputBlock}>
-                            <Text style={styles.label}>Dia da semana</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Qual o dia?"
-                                placeholderTextColor="#C1BCCC" />
-                        </View>
-                        <View style={styles.inputBlock}>
-                            <Text style={styles.label}>Horário</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Qual o horário?"
-                                placeholderTextColor="#C1BCCC" />
+            <PageHeader
+                title="Proffys disponíveis"
+                headerRight={(
+                    <BorderlessButton onPress={handleToogleFiltersVisible}>
+                        <Feather name="filter" size={20} color="#FFF" />
+                    </BorderlessButton>
+                )}>
+                { isFiltersVisible && (
+                    <View style={styles.searchForm}>
+                        <Text style={styles.label}>Matéria</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Qual a matéria?"
+                            placeholderTextColor="#C1BCCC" />
+                        <View style={styles.inputGroup}>
+                            <View style={styles.inputBlock}>
+                                <Text style={styles.label}>Dia da semana</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Qual o dia?"
+                                    placeholderTextColor="#C1BCCC" />
+                            </View>
+                            <View style={styles.inputBlock}>
+                                <Text style={styles.label}>Horário</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Qual o horário?"
+                                    placeholderTextColor="#C1BCCC" />
+                            </View>
                         </View>
                     </View>
-                </View>
+                )}
             </PageHeader>
             <ScrollView
                 style={styles.teacherList}
